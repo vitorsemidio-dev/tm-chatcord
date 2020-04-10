@@ -11,6 +11,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
   console.log('New WS Connection...');
+
+  socket.emit('message', 'Welcome to chatcord');
 })
 
 const PORT = 3000 || process.env.PORT;
