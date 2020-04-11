@@ -24,7 +24,7 @@ io.on('connection', socket => {
 
     socket.join(user.room);
 
-    socket.emit('message', formatMessage(botName, 'Welcome to chatcord'));
+    socket.emit('message', formatMessage(botName, `Welcome to chatcord, ${user.username}`));
   
     socket.broadcast
       .to(user.room)
