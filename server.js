@@ -26,10 +26,17 @@ io.on('connection', socket => {
 
     socket.emit('message', formatMessage(botName, 'Welcome to chatcord'));
   
-    socket.broadcast.to(user.room).emit(
-      'message',
-      formatMessage(botName, `${username} has joined the chat`),
-    );
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${username} has joined the chat`),
+      );
+
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
    });
 
   socket.on('chatMessage', (msg) => {
@@ -46,7 +53,13 @@ io.on('connection', socket => {
         'message',
         formatMessage(botName, `${user.username} has left the chat`),
       );
+      
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
     }
+
   });
 });
 
