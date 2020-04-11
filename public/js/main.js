@@ -4,6 +4,7 @@ const chatMessages = document.querySelector('.chat-messages');
 const socket = io();
 
 socket.on('message', message => {
+  console.log(message);
   outputMessage(message);
 
   scrollChatMessage();
@@ -28,14 +29,14 @@ function scrollChatMessage() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-function outputMessage(message) {
+function outputMessage({username, text, time}) {
   const div = document.createElement('div');
   div.classList.add('message');
   div.innerHTML = `
   <div class="message">
-    <p class="meta">Brad <span>9:12pm</span></p>
+    <p class="meta">${username} <span>${time}</span></p>
     <p class="text">
-      ${message}
+      ${text}
     </p>
   </div>
   `;
